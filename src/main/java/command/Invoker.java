@@ -1,13 +1,17 @@
 package command;
 
+import client.ServerResponse;
 import messages.*;
 import util.DataCollector;
 import util.Semester;
 import util.StudyGroup;
 
 import java.io.IOException;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.SocketAddress;
 import java.nio.channels.DatagramChannel;
+import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -16,12 +20,12 @@ import java.util.TreeSet;
 public class Invoker {
     private final Receiver state;
     static final List<CommandEnum> history = new ArrayList<>();
-    private final DatagramChannel channel;
-    private final SocketAddress serverAddress;
+    private final DatagramSocket socket;
+    private final InetAddress serverAddress;
 
-    public Invoker(Receiver programState, DatagramChannel channel, SocketAddress serverAddress) {
+    public Invoker(Receiver programState, DatagramSocket socket, InetAddress serverAddress) {
         state = programState;
-        this.channel = channel;
+        this.socket = socket;
         this.serverAddress = serverAddress;
     }
 
@@ -160,8 +164,12 @@ public class Invoker {
         } else {
             System.out.printf("Команды '%s' не существует (help - список команд) или аргумент команды не задан\n", rawCommand);
         }
-        Set<StudyGroup> updatedCollection = new ServerResponse(state, message, channel, serverAddress).getUpdatedCollection();
-        state.setCollection(updatedCollection);
+        System.out.println("message to be sent " + message);
+        if (message != null) {
+            new ServerResponse(state, message, socket, serverAddress);
+        }
+//        Set<StudyGroup> updatedCollection = new ServerResponse(state, message, channel, serverAddress).getUpdatedCollection();
+//        state.setCollection(updatedCollection);
         return state;
         //return new ServerResponse(state, command).getState();
     }

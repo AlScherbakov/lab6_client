@@ -1,4 +1,4 @@
-import command.*;
+import client.Client;
 
 import java.util.*;
 
