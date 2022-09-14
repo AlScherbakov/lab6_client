@@ -83,7 +83,6 @@ public class Invoker {
         } else {
             System.out.printf("Команды '%s' не существует (help - список команд) или аргумент команды не задан\n", rawCommand);
         }
-        System.out.println("message to be sent " + message);
         if (message != null) {
             new ServerResponse(message, socket, serverAddress, port);
         }

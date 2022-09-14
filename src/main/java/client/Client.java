@@ -1,8 +1,5 @@
 package client;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import command.CommandEnum;
 import command.Invoker;
 import command.Receiver;
 import util.DataInputSource;
@@ -37,7 +34,7 @@ public class Client {
     };
 
     private void setPort() {
-        System.out.println("----\nУкажите порт для подключения к серверу\n----");
+        System.out.println("Укажите порт для подключения к серверу:");
         while (port == -1) {
             String numb = scan.nextLine();
             if (numb.matches("[0-9]+")) {
@@ -45,10 +42,10 @@ public class Client {
                 if (portCandidate < 65535 && portCandidate >= 0) {
                     port = portCandidate;
                 } else {
-                    System.out.println("----\nНедопустимый номер порта, введите снова\n----");
+                    System.out.println("Недопустимый номер порта, попробуйте ещё раз:");
                 }
             } else {
-                System.out.println("----\nНедопустимый номер порта, введите снова\n----");
+                System.out.println("Недопустимый номер порта, попробуйте ещё раз:");
             }
         }
     }
@@ -56,51 +53,25 @@ public class Client {
 
     /**
      * run method
-     * @throws IOException
      */
-    public void run() throws IOException {
-        String outputFilepath = System.getenv("lab5_data_filepath");
+    public void run() {
         Set<StudyGroup> groups = new TreeSet<>();
-        Gson gson = new GsonBuilder().setDateFormat("dd.MM.yyyy HH:mm:ss").create();
         String collectionInitializationDate = "";
-//        try {
-//            if (outputFilepath != null){
-//                File outputFile = new File(outputFilepath);
-//                if (!outputFile.exists()){
-//                    throw new FileNotFoundException("Файл " + outputFilepath + " не найден. Проверьте переменную окружения 'lab5_data_filepath'");
-//                } else if (!outputFile.canWrite()){
-//                    throw new AccessDeniedException("Нет права на запись в файл " + outputFilepath);
-//                } else if (!outputFile.canRead()){
-//                    throw new AccessDeniedException("Нет права чтение файла " + outputFilepath);
-//                } else {
-//                    FileReader dataFileReader = new FileReader(outputFilepath);
-//                    StudyGroup[] data = gson.fromJson(dataFileReader, StudyGroup[].class);
-//                    StudyGroup[] clearData = Arrays.stream(data).filter(StudyGroup::isValid).toArray(StudyGroup[]::new);
-//                    if(data.length != clearData.length){
-//                        System.err.println("Некоторые данные некорректны");
-//                    }
-//                    Collections.addAll(groups, clearData);
-//                    collectionInitializationDate = new Date(new File(outputFilepath).lastModified()).toString();
-//                }
-//            } else {
-//                throw new RuntimeException("Переменная окружения 'lab5_data_filepath' не задана");
-//            }
-//        } catch (FileNotFoundException | AccessDeniedException e) {
-//            System.err.println(e.getMessage());
-//            System.exit(1);
-//        }
-        List<CommandEnum> history = new ArrayList<>();
         System.out.println("Введите команду (help - помощь)");
         DataInputSource inputSource = new DataInputSource(scan);
-        Receiver programState = new Receiver(groups, outputFilepath, history, true, inputSource, collectionInitializationDate);
+        Receiver programState = new Receiver(groups, true, inputSource, collectionInitializationDate);
         while (programState.getWorking() && active){
-            String command = programState.getSource().get();
-            if (command.isEmpty()) {
-                programState.removeFirstReader();
-                continue;
-            };
-            Invoker invoker = new Invoker(programState, socket, serverAddress, port);
-            programState = invoker.executeCommand(command);
+            try{
+                String command = programState.getSource().get();
+                if (command.isEmpty()) {
+                    programState.removeFirstReader();
+                    continue;
+                };
+                Invoker invoker = new Invoker(programState, socket, serverAddress, port);
+                programState = invoker.executeCommand(command);
+            } catch (IOException e){
+                System.err.println("Ошибка обработки команды");
+            }
         }
     }
 

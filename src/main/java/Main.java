@@ -15,7 +15,8 @@ public class Main {
             client.run();
         } catch (Exception e){
             client.stop();
-            System.err.println(e.getMessage());
+            System.err.println("Что-то сломалось \n" + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

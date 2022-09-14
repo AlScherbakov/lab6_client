@@ -9,8 +9,8 @@ import java.util.Scanner;
  */
 
 public class DataInputSource {
-    private Scanner scan;
-    private BufferedReader reader;
+    private Scanner scan = null;
+    private BufferedReader reader = null;
     public DataInputSource(Scanner scan){
         this.scan = scan;
     }
@@ -18,9 +18,10 @@ public class DataInputSource {
         this.reader = reader;
     }
     public String get() throws IOException {
-        return scan != null ? scan.nextLine().trim() : reader.readLine().trim();
-    }
-    public boolean hasNext() throws IOException {
-        return scan != null ? scan.hasNext() : reader.readLine() != null;
+        String str = scan != null ? scan.nextLine() : reader != null ? reader.readLine() : null;
+        if (str != null){
+            return str.trim();
+        }
+        return "";
     }
 }
