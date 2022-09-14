@@ -79,8 +79,8 @@ public class Invoker {
             message = new RemoveByIdMessage(id);
         } else if (rawCommand.matches("execute_script\\s*.+")) {
             String scriptPath = rawCommand.split(" ")[1];
-//            message = new ExecuteScriptMessage(scriptPath);
-            state.pushReader(new ExecuteScriptCommand(scriptPath).execute());
+            boolean isSuccessfullySetScript = state.pushReader(new ExecuteScriptCommand(scriptPath).execute(), scriptPath);
+            if(isSuccessfullySetScript) message = new ExecuteScriptMessage(scriptPath);
         } else if (rawCommand.matches("filter_less_than_semester_enum\\s*[A-Z]+")) {
             Semester semester = Semester.valueOf(rawCommand.split(" ")[1]);
             message = new FilterLessThanSemesterEnumMessage(semester);

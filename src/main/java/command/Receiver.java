@@ -19,6 +19,7 @@ public class Receiver {
     private DataInputSource source;
     public String collectionInitializationDate;
     private final Deque<BufferedReader> readers = new ArrayDeque<>();
+    private List<String> scriptBanList = new ArrayList<>();
     public Receiver(Set<StudyGroup> c, String o, List<CommandEnum> h, boolean w, DataInputSource s, String cid){
         collection = c;
         outputFilepath = o;
@@ -70,11 +71,14 @@ public class Receiver {
         collectionInitializationDate = d;
     }
 
-    public void pushReader(BufferedReader r){
-        if(!readers.contains(r)){
+    public boolean pushReader(BufferedReader r, String scriptPath){
+        if(scriptBanList.stream().filter(x -> x.contains(scriptPath)).findAny().orElse(null) == null){
             readers.push(r);
+            scriptBanList.add(scriptPath);
+            return true;
         } else {
-            System.out.println("Один из скриптов пропущен во избежании рекурсии");
+            System.out.printf("Cкрипт %s пропущен во избежании рекурсии\n", scriptPath);
+            return false;
         }
     }
 

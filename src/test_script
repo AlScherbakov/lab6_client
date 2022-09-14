@@ -2,3 +2,5 @@ show
 info
 help
 execute_script src/test_script
+execute_script ./src/test_script
+execute_script src/second_script
