@@ -71,7 +71,11 @@ public class Receiver {
     }
 
     public void pushReader(BufferedReader r){
-        readers.push(r);
+        if(!readers.contains(r)){
+            readers.push(r);
+        } else {
+            System.out.println("Один из скриптов пропущен во избежании рекурсии");
+        }
     }
 
     public void removeFirstReader(){

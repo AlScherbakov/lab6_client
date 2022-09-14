@@ -5,16 +5,12 @@ import com.google.gson.GsonBuilder;
 import command.CommandEnum;
 import command.Invoker;
 import command.Receiver;
-import messages.Message;
 import util.DataInputSource;
 import util.StudyGroup;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.*;
-import java.nio.ByteBuffer;
-import java.nio.channels.DatagramChannel;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -24,43 +20,40 @@ public class Client {
     private final Scanner scan;
     boolean active = true;
 
-    private int PORT = 3333;
-    private boolean isServerAlive = false;
-//    private DatagramChannel channel;
-    private InetAddress serverAddress;
+    private InetAddress serverAddress = null;
+    private int port = -1;
 
     private DatagramSocket socket;
 
     public Client(Scanner s) {
         scan = s;
         try{
+            setPort();
             socket = new DatagramSocket();
+            socket.setSoTimeout(10000);
             serverAddress = InetAddress.getByName("localhost");
-        } catch (UnknownHostException | SocketException exception) {
-            System.err.println(exception.getMessage());
+        } catch (UnknownHostException | SocketException e){
+            System.err.println("Ошибка при подключении к серверу\n" + e.getMessage());
         }
     };
 
-//    protected void setPort(){
-//        InetSocketAddress localAddress = null;
-//        System.out.println("----\nУкажите порт для подключения к серверу\n----");
-//        while (localAddress.toString().length() < 1) {
-//            String numb = scan.nextLine();
-//            if (numb.matches("[0-9]+")) {
-//                if (Integer.parseInt(numb) < 65535 && Integer.parseInt(numb) >= 0) {
-//                    localAddress = new InetSocketAddress("localhost", Integer.parseInt(numb));
-//                    this.serverAddress = localAddress;
-//                } else {
-//                    System.out.println("----\nНедопустимый номер порта, введите снова\n----");
-//                }
-//            } else {
-//                System.out.println("----\nНедопустимый номер порта, введите снова\n----");
-//            }
-//        }
-//    }
+    private void setPort() {
+        System.out.println("----\nУкажите порт для подключения к серверу\n----");
+        while (port == -1) {
+            String numb = scan.nextLine();
+            if (numb.matches("[0-9]+")) {
+                int portCandidate = Integer.parseInt(numb);
+                if (portCandidate < 65535 && portCandidate >= 0) {
+                    port = portCandidate;
+                } else {
+                    System.out.println("----\nНедопустимый номер порта, введите снова\n----");
+                }
+            } else {
+                System.out.println("----\nНедопустимый номер порта, введите снова\n----");
+            }
+        }
+    }
 
-
-// buffered reader, custom tag
 
     /**
      * run method
@@ -107,37 +100,8 @@ public class Client {
                 programState.removeFirstReader();
                 continue;
             };
-            Invoker invoker = new Invoker(programState, socket, serverAddress);
+            Invoker invoker = new Invoker(programState, socket, serverAddress, port);
             programState = invoker.executeCommand(command);
-            getMessage();
-        }
-    }
-
-    public void getMessage () {
-        System.out.println("getMessage call");
-        try{
-            byte[] bytes = new byte[16384];
-            DatagramPacket datagramPacket = new DatagramPacket(bytes, bytes.length);
-            socket.receive(datagramPacket);
-            System.out.println(datagramPacket);
-            String received = new String(datagramPacket.getData(), 0, datagramPacket.getLength());
-//            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
-//            ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-//            Object serverResponse = objectInputStream.readObject();
-            System.out.println("serverResponse:" + received);
-//            if(clientMessage == null) return;
-//            String response = new CommandExecutor((Message) clientMessage).execute();
-//            server.sender.send(response);
-//            byteArrayInputStream.close();
-//            objectInputStream.close();
-
-//            ByteBuffer receiveBuffer = ByteBuffer.allocate(16384);
-//            channel.receive(receiveBuffer);
-//            String received = extractMessage(receiveBuffer);
-//            System.out.println(received + "- received");
-
-        } catch (IOException e){
-            System.err.println("Возникла ошибка при обработке ответа сервера");
         }
     }
 
