@@ -8,8 +8,6 @@ import util.StudyGroup;
 
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Invoker {
     private final Receiver state;
@@ -46,8 +44,6 @@ public class Invoker {
             }
         } else if (rawCommand.matches("clear")) {
             message = new ClearMessage();
-        } else if (rawCommand.matches("save")) {
-            System.out.println("Команду save из клиентского приложения необходимо убрать.");
         } else if (rawCommand.matches("exit")) {
             System.exit(0);
         } else if (rawCommand.matches("remove_greater")) {
