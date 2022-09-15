@@ -1,4 +1,7 @@
+package main;
+
 import client.Client;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.util.*;
 
@@ -15,8 +18,7 @@ public class Main {
             client.run();
         } catch (Exception e){
             client.stop();
-            System.err.println("Что-то сломалось \n" + e.getMessage());
-            e.printStackTrace();
+            System.err.println(ExceptionUtils.getStackTrace(e));
         }
     }
 }

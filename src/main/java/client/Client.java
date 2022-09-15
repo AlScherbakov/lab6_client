@@ -10,7 +10,7 @@ import java.net.*;
 import java.util.*;
 
 /**
- * Client class from Command pattern. Main process host. May be used for creation of several application instances
+ * Client class from Command pattern. main.Main process host. May be used for creation of several application instances
  */
 public class Client {
     private final Scanner scan;

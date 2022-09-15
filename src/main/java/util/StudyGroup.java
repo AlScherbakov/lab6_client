@@ -1,16 +1,16 @@
 package util;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 
 public class StudyGroup implements Comparable<StudyGroup>, Serializable {
     private static final long serialVersionUID = 99L;
     private Integer id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
-    private Date creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
+    private LocalDate creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
     private int studentsCount; //Значение поля должно быть больше 0
     private long transferredStudents; //Значение поля должно быть больше 0
     private FormOfEducation formOfEducation; //Поле не может быть null
@@ -20,7 +20,7 @@ public class StudyGroup implements Comparable<StudyGroup>, Serializable {
     public StudyGroup(){
         generateIDs();
         id = newId();
-        creationDate = new Date();
+        creationDate = LocalDate.now();
     }
 
     public StudyGroup(String name, Coordinates coordinates, int studentsCount, long transferredStudents, FormOfEducation formOfEducation, Semester semesterEnum, Person groupAdmin){
@@ -33,7 +33,7 @@ public class StudyGroup implements Comparable<StudyGroup>, Serializable {
         setSemesterEnum(semesterEnum);
         setGroupAdmin(groupAdmin);
     }
-    public StudyGroup(int id, Date creationDate, String name, Coordinates coordinates, int studentsCount, long transferredStudents, FormOfEducation formOfEducation, Semester semesterEnum, Person groupAdmin){
+    public StudyGroup(int id, LocalDate creationDate, String name, Coordinates coordinates, int studentsCount, long transferredStudents, FormOfEducation formOfEducation, Semester semesterEnum, Person groupAdmin){
         this();
         this.id = id;
         this.creationDate = creationDate;
@@ -102,7 +102,7 @@ public class StudyGroup implements Comparable<StudyGroup>, Serializable {
     public Integer getId(){
         return id;
     }
-    public Date getCreationDate(){
+    public LocalDate getCreationDate(){
         return creationDate;
     }
     public String getName(){
