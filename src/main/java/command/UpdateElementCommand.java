@@ -22,26 +22,6 @@ public class UpdateElementCommand extends Command{
         this.id = id;
         this.element = element;
     }
-
-    //    Set<StudyGroup> collection;
-//    DataInputSource source;
-//    public UpdateElementCommand(int i, Set<StudyGroup> c, DataInputSource s){
-//        id = i;
-//        collection = c;
-//        source = s;
-//        this.name = CommandEnum.UPDATE;
-//    }
-//    @Override
-//    public Set<StudyGroup> execute(){
-//        TreeSet<StudyGroup> g = new TreeSet<>(collection);
-//        g.removeIf(x -> !Objects.equals(x.getId(), id));
-//        StudyGroup aGroup = g.first();
-//        assert aGroup != null;
-//        StudyGroup updatedGroup = new DataCollector(source).requestStudyGroup();
-//        collection.remove(aGroup);
-//        collection.add(updatedGroup);
-//        return collection;
-//    }
     @Override
     public String describe(){
         return "update (int)id {element} : обновить значение элемента коллекции, id которого равен заданному";

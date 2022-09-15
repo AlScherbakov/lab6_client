@@ -25,24 +25,4 @@ public class UpdateElementMessage extends Message {
     public int getId() {
         return id;
     }
-
-    //    Set<StudyGroup> collection;
-//    DataInputSource source;
-//    public UpdateElementCommand(int i, Set<StudyGroup> c, DataInputSource s){
-//        id = i;
-//        collection = c;
-//        source = s;
-//        this.name = CommandEnum.UPDATE;
-//    }
-//    @Override
-//    public Set<StudyGroup> execute(){
-//        TreeSet<StudyGroup> g = new TreeSet<>(collection);
-//        g.removeIf(x -> !Objects.equals(x.getId(), id));
-//        StudyGroup aGroup = g.first();
-//        assert aGroup != null;
-//        StudyGroup updatedGroup = new DataCollector(source).requestStudyGroup();
-//        collection.remove(aGroup);
-//        collection.add(updatedGroup);
-//        return collection;
-//    }
 }

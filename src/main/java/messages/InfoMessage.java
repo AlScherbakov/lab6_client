@@ -11,15 +11,4 @@ public class InfoMessage extends Message {
     public InfoMessage(){
         this.name = CommandEnum.INFO;
     }
-//    Set<StudyGroup> collection;
-//    String creationDate;
-//    public InfoCommand(Set<StudyGroup> t, String d){
-//        collection = t;
-//        creationDate = d;
-//        this.name = CommandEnum.INFO;
-//    }
-//    @Override
-//    public String execute(){
-//        return String.format("Тип коллекции - %s. Дата инициализации - %s. Количество элементов - %d\n", collection.getClass(), creationDate, collection.size());
-//    }
 }

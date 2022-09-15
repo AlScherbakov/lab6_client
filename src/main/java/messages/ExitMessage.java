@@ -11,9 +11,4 @@ public class ExitMessage extends Message {
     public ExitMessage(){
         this.name = CommandEnum.EXIT;
     }
-//    @Override
-//    public Integer execute(){
-//        System.exit(0);
-//        return 0;
-//    }
 }

@@ -11,15 +11,4 @@ public class MaxGroupByAdminMessage extends Message {
     public MaxGroupByAdminMessage(){
         this.name = CommandEnum.MAX_BY_GROUP_ADMIN;
     }
-//    Set<StudyGroup> collection;
-//    public MaxGroupByAdminCommand(Set<StudyGroup> c){
-//        collection = c;
-//        this.name = CommandEnum.MAX_BY_GROUP_ADMIN;
-//    }
-//    @Override
-//    public StudyGroup execute(){
-//        TreeSet<StudyGroup> g = new TreeSet<>(Comparator.comparing(StudyGroup::getAdmin));
-//        g.addAll(collection);
-//        return g.last();
-//    }
 }

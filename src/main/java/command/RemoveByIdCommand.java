@@ -16,17 +16,6 @@ public class RemoveByIdCommand extends Command {
     public RemoveByIdCommand(int id){
         this.id = id;
     }
-//    Set<StudyGroup> collection;
-//    public RemoveByIdCommand(int i, Set<StudyGroup> c){
-//        id = i;
-//        collection = c;
-//        this.name = CommandEnum.REMOVE_BY_ID;
-//    }
-//    @Override
-//    public Set<StudyGroup> execute(){
-//        collection.removeIf(g -> Objects.equals(g.getId(), id));
-//        return collection;
-//    }
     @Override
     public String describe() {
         return "remove_by_id (int)id : удалить элемент из коллекции по его id";

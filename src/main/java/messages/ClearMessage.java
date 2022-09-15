@@ -12,9 +12,4 @@ public class ClearMessage extends Message {
     public ClearMessage(){
         this.name = CommandEnum.CLEAR;
     }
-//
-//    @Override
-//    public Set<StudyGroup> execute (){
-//        return new TreeSet<>();
-//    }
 }

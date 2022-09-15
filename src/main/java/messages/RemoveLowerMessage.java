@@ -9,8 +9,6 @@ import util.StudyGroup;
 
 public class RemoveLowerMessage extends Message {
     private static final long serialVersionUID = 13L;
-//    TreeSet<StudyGroup> collection;
-//    DataInputSource source;
     public StudyGroup element;
     public RemoveLowerMessage(StudyGroup element){
         this.name = CommandEnum.REMOVE_LOWER;
@@ -20,19 +18,4 @@ public class RemoveLowerMessage extends Message {
     public StudyGroup getElement(){
         return element;
     }
-
-//    public RemoveLowerCommand(TreeSet<StudyGroup> c, DataInputSource s){
-//        collection = c;
-//        source = s;
-//        this.name = CommandEnum.REMOVE_LOWER;
-//    }
-//
-//    @Override
-//    public Set<StudyGroup> execute(){
-//        System.out.println("Введите новый элемент для сравнения:");
-//        StudyGroup aGroup = new DataCollector(source).requestStudyGroup();
-//        Set<StudyGroup> groupsToRemove = collection.headSet(aGroup);
-//        collection.removeAll(groupsToRemove);
-//        return collection;
-//    }
 }
